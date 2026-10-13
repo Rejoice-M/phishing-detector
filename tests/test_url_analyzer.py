@@ -73,7 +73,7 @@ def test_clean_url_scores_zero():
 
 
 def test_obviously_bad_url_scores_high():
-    score = calculate_score(analyze_url("http://192.168.1.1/login@secure", include_network=False))
+    score = calculate_score(analyze_url("http://user@192.168.1.1/login", include_network=False))
     assert risk_level(score) == "high"
 
 
