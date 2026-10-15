@@ -1,0 +1,15 @@
+From: "FNB Notifications" <noreply@fnb.co.za>
+To: student@example.com
+Subject: Your monthly statement is ready
+Date: Mon, 12 Oct 2026 09:15:00 +0200
+Message-ID: <statement-001@fnb.co.za>
+Authentication-Results: mx.example.com; spf=pass smtp.mailfrom=fnb.co.za; dkim=pass header.d=fnb.co.za; dmarc=pass header.from=fnb.co.za
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+
+Hello,
+
+Your monthly statement is now available. Log in to the FNB app or website to view it.
+
+Regards,
+FNB
