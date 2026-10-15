@@ -2,7 +2,7 @@
 
 A tool that analyzes URLs and emails for signs of phishing and returns a risk score (0-100) with a plain-English reason for every finding.
 
-**Status:** URL analysis and email analysis are working. A web dashboard is next.
+**Status:** URL analysis, email analysis and a web dashboard are working.
 
 ## What it does
 
@@ -93,7 +93,7 @@ Start the API:
 uvicorn app.main:app --reload
 ```
 
-Then open http://127.0.0.1:8000/docs to try the endpoints in the browser.
+Then open http://127.0.0.1:8000/ for the dashboard, or http://127.0.0.1:8000/docs for the interactive API docs.
 
 ## Running the tests
 
@@ -114,7 +114,7 @@ app/
     email_analyzer.py      email header and body checks
 tests/                     unit tests and the sample-URL scoring table
 samples/                   made-up .eml files for testing
-frontend/                  dashboard (planned)
+frontend/                  dashboard (HTML, CSS, JavaScript)
 ```
 
 ## Known limitations
@@ -131,7 +131,7 @@ frontend/                  dashboard (planned)
 
 - [x] URL analysis
 - [x] Email analysis (headers and body)
-- [ ] Web dashboard
+- [x] Web dashboard
 - [ ] Polish and deployment
 - [ ] Stretch: machine-learning classifier as an extra signal
 - [ ] Stretch: browser extension for real-time link scanning

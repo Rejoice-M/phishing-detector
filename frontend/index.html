@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+  index.html
+  Purpose: the dashboard page. Two tabs (check a URL / check an email), a results area, and
+  three example buttons. All behaviour is in app.js and all styling is in style.css.
+  FastAPI serves this page at "/" and the other two files under "/static/".
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phishing Detector</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Phishing Detector</h1>
+      <p class="subtitle">Check a URL or an email for signs of phishing. You get a risk score and a plain-English reason for every finding.</p>
+    </header>
+
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab active" data-tab="url" role="tab" aria-selected="true">Check a URL</button>
+      <button type="button" class="tab" data-tab="email" role="tab" aria-selected="false">Check an email</button>
+    </div>
+
+    <section id="panel-url" class="card">
+      <form id="url-form">
+        <label for="url-input">URL to check</label>
+        <div class="row">
+          <input id="url-input" type="text" placeholder="https://example.com/login" autocomplete="off" required>
+          <button type="submit" id="url-submit">Analyze</button>
+        </div>
+      </form>
+      <div class="examples">
+        <span>Try an example:</span>
+        <button type="button" class="chip" data-url="https://www.fnb.co.za/login">fnb.co.za (legitimate)</button>
+        <button type="button" class="chip" data-url="http://paypa1-secure-login.com/verify">paypa1-secure-login.com (lookalike)</button>
+        <button type="button" class="chip" data-url="https://testsafebrowsing.appspot.com/s/phishing.html">Google test page (known phishing)</button>
+      </div>
+    </section>
+
+    <section id="panel-email" class="card" hidden>
+      <form id="email-form">
+        <label for="email-input">Email file (.eml)</label>
+        <div class="row">
+          <input id="email-input" type="file" accept=".eml,message/rfc822" required>
+          <button type="submit" id="email-submit">Analyze</button>
+        </div>
+        <p class="hint">In Gmail: open the message, click the three dots, and choose "Download message". Links inside the email are checked too, which can contact WHOIS and Google.</p>
+      </form>
+    </section>
+
+    <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+
+    <section id="result" class="card result" hidden>
+      <div class="summary">
+        <div class="score-box">
+          <span id="score" class="score">0</span>
+          <span class="score-max">/ 100</span>
+        </div>
+        <div class="summary-text">
+          <span id="risk" class="badge low">low risk</span>
+          <p id="target" class="target"></p>
+        </div>
+      </div>
+      <div class="meter"><div id="meter-fill" class="meter-fill low"></div></div>
+
+      <h2>Warning signs <span id="flag-count" class="count"></span></h2>
+      <p id="no-flags" class="empty" hidden>No warning signs were found.</p>
+      <ul id="flagged" class="findings"></ul>
+
+      <details>
+        <summary>Checks with no issue <span id="pass-count" class="count"></span></summary>
+        <ul id="passed" class="findings"></ul>
+      </details>
+    </section>
+
+    <footer>This tool gives a risk estimate, not a verdict. Always use your own judgement.</footer>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

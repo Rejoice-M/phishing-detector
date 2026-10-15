@@ -1,17 +1,22 @@
 # main.py
 # Purpose: the API entry point (FastAPI). This is the file uvicorn starts.
-#   - GET /              : health check, returns {"status": "ok"}
+#   - GET /              : the web dashboard (frontend/index.html)
+#   - GET /static/...    : the dashboard's CSS and JavaScript (from the frontend/ folder)
+#   - GET /health        : health check, returns {"status": "ok"}
 #   - POST /analyze/url  : takes {"url": "..."}, runs the URL checks, and returns the score,
 #                          risk level and every finding with its reason
 #   - POST /analyze/email: takes an uploaded .eml file, runs the header and body checks, and
 #                          returns the same kind of result
-# Interactive docs for trying it out: http://127.0.0.1:8000/docs
+# Interactive API docs: http://127.0.0.1:8000/docs
 # Run with: uvicorn app.main:app --reload
 
 from dataclasses import asdict
+from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.concurrency import run_in_threadpool
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from app.analyzers.email_analyzer import analyze_email
@@ -20,6 +25,7 @@ from app.scoring import calculate_score, risk_level
 
 app = FastAPI(title="Phishing Detector")
 
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
 MAX_EMAIL_BYTES = 5 * 1024 * 1024  # refuse uploads over 5 MB
 
 
@@ -27,7 +33,12 @@ class UrlRequest(BaseModel):
     url: str
 
 
-@app.get("/")
+@app.get("/", include_in_schema=False)
+def dashboard():
+    return FileResponse(FRONTEND_DIR / "index.html")
+
+
+@app.get("/health")
 def health():
     return {"status": "ok"}
 
@@ -61,3 +72,7 @@ async def analyze_email_upload(file: UploadFile = File(...)):
         "risk_level": risk_level(score),
         "findings": [asdict(f) for f in findings],
     }
+
+
+# Mounted last so it never hides the routes above
+app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
