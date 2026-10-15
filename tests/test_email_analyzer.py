@@ -132,11 +132,11 @@ def test_legit_sender_domain_is_clean():
 # ---------- Sample files ----------
 
 def test_legit_sample_scores_low():
-    score = calculate_score(analyze_email((SAMPLES / "legit.eml").read_bytes()))
+    score = calculate_score(analyze_email((SAMPLES / "legit.eml").read_bytes(), include_network=False))
     assert score == 0
     assert risk_level(score) == "low"
 
 
 def test_phishing_sample_scores_high():
-    score = calculate_score(analyze_email((SAMPLES / "phishing.eml").read_bytes()))
+    score = calculate_score(analyze_email((SAMPLES / "phishing.eml").read_bytes(), include_network=False))
     assert risk_level(score) == "high"

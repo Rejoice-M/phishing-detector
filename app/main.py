@@ -1,16 +1,17 @@
 # main.py
 # Purpose: the API entry point (FastAPI). This is the file uvicorn starts.
-#   - GET /             : health check, returns {"status": "ok"}
-#   - POST /analyze/url : takes {"url": "..."}, runs the URL checks, and returns the score,
-#                         risk level and every finding with its reason
-#   - POST /analyze/email: takes an uploaded .eml file, runs the email checks, and returns
-#                         the same kind of result
+#   - GET /              : health check, returns {"status": "ok"}
+#   - POST /analyze/url  : takes {"url": "..."}, runs the URL checks, and returns the score,
+#                          risk level and every finding with its reason
+#   - POST /analyze/email: takes an uploaded .eml file, runs the header and body checks, and
+#                          returns the same kind of result
 # Interactive docs for trying it out: http://127.0.0.1:8000/docs
 # Run with: uvicorn app.main:app --reload
 
 from dataclasses import asdict
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel
 
 from app.analyzers.email_analyzer import analyze_email
@@ -51,7 +52,8 @@ async def analyze_email_upload(file: UploadFile = File(...)):
     if len(raw) > MAX_EMAIL_BYTES:
         raise HTTPException(status_code=413, detail="Email file is too large (5 MB limit)")
 
-    findings = analyze_email(raw)
+    # The link checks can wait on WHOIS / Google, so run them off the main server loop
+    findings = await run_in_threadpool(analyze_email, raw)
     score = calculate_score(findings)
     return {
         "filename": file.filename,

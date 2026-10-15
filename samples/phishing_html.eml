@@ -1,0 +1,15 @@
+From: "FNB Security" <alerts@fnb-secure-update.co.za>
+To: student@example.com
+Subject: Action required: confirm your identity
+Date: Mon, 12 Oct 2026 10:30:00 +0200
+Message-ID: <alert-888@fnb-secure-update.co.za>
+Authentication-Results: mx.example.com; spf=softfail smtp.mailfrom=fnb-secure-update.co.za; dkim=none; dmarc=fail header.from=fnb-secure-update.co.za
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+
+<html><body>
+<p>Dear customer,</p>
+<p>We detected suspicious activity on your account. Please log in at
+<a href="http://fnb-secure-update.co.za/login">www.fnb.co.za</a>
+to confirm your identity within 24 hours.</p>
+</body></html>
