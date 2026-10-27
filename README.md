@@ -2,7 +2,9 @@
 
 A tool that analyzes URLs and emails for signs of phishing and returns a risk score (0-100) with a plain-English reason for every finding.
 
-**Status:** URL analysis, email analysis and a web dashboard are working.
+**Status:** URL analysis, email analysis and a web dashboard are working, and the app is deployed.
+
+**Live demo:** https://YOUR-APP-NAME.onrender.com (hosted on a free tier, so the first load after a quiet period can take about a minute)
 
 ## Screenshots
 
@@ -138,6 +140,6 @@ frontend/                  dashboard (HTML, CSS, JavaScript)
 - [x] URL analysis
 - [x] Email analysis (headers and body)
 - [x] Web dashboard
-- [ ] Polish and deployment
+- [x] Polish and deployment
 - [ ] Stretch: machine-learning classifier as an extra signal
 - [ ] Stretch: browser extension for real-time link scanning
