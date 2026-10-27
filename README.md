@@ -4,6 +4,12 @@ A tool that analyzes URLs and emails for signs of phishing and returns a risk sc
 
 **Status:** URL analysis, email analysis and a web dashboard are working.
 
+## Screenshots
+
+![URL check showing a high-risk result](docs/dashboard-url.png)
+
+![Email check showing a high-risk result](docs/dashboard-email.png)
+
 ## What it does
 
 ### URL analysis (`POST /analyze/url`)
