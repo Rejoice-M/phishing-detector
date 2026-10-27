@@ -4,7 +4,7 @@ A tool that analyzes URLs and emails for signs of phishing and returns a risk sc
 
 **Status:** URL analysis, email analysis and a web dashboard are working, and the app is deployed.
 
-**Live demo:** https://YOUR-APP-NAME.onrender.com (hosted on a free tier, so the first load after a quiet period can take about a minute)
+**Live demo:** https://phishing-detector-oa78.onrender.com (hosted on a free tier, so the first load after a quiet period can take about a minute)
 
 ## Screenshots
 
